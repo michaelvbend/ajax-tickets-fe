@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import MatchList from '../components/MatchList';
 
 function MatchWidgetScreen() {
-  const API_URL = 'http://localhost:8080/matches';
+  const API_URL = 'https://goldfish-app-mpxfi.ondigitalocean.app/api/matches';
 
   const fetchAvailableMatches = async () => {
     const response = await fetch(API_URL);
