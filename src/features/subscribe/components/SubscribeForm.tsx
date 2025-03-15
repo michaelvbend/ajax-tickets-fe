@@ -6,7 +6,8 @@ function SubscribeForm() {
 
   const mutation = useMutation({
     mutationFn: (newEmail: string) => {
-      const API_URL = 'http://localhost:8080/subscribe';
+      const API_URL =
+        'https://goldfish-app-mpxfi.ondigitalocean.app/api/subscribe';
       return fetch(API_URL, {
         method: 'POST',
         headers: {
