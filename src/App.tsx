@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
 import MatchWidgetScreen from './features/match-widget/screens/MatchWidgetScreen';
 import SubscribeScreen from './features/subscribe/screens/SubscribeScreen';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Analytics />
     </QueryClientProvider>
   );
 }
