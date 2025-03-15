@@ -29,7 +29,10 @@ function MatchList({ matchList }: MatchListProps) {
                 <span className='text-red-500 font-semibold'>Sold Out</span>
               )}
             </div>
-            <a href={match.matchLink} className='text-blue-500 hover:underline'>
+            <a
+              href='https://resale.ajax.nl/content'
+              className='text-blue-500 hover:underline'
+            >
               View Match
             </a>
           </div>
