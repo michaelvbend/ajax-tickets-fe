@@ -5,7 +5,7 @@ function SubscribeForm() {
   const [email, setEmail] = useState('');
 
   const mutation = useMutation({
-    mutationFn: (newEmail) => {
+    mutationFn: (newEmail: string) => {
       const API_URL = 'http://localhost:8080/subscribe';
       return fetch(API_URL, {
         method: 'POST',
@@ -22,7 +22,7 @@ function SubscribeForm() {
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutation.mutate(email);
   };

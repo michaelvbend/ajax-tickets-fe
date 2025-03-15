@@ -1,27 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import MatchList from '../components/MatchList';
 
-const matches = [
-  {
-    homeTeam: 'Ajax',
-    awayTeam: 'PSV',
-    soldOut: true,
-    matchLink: '#',
-  },
-  {
-    homeTeam: 'Ajax',
-    awayTeam: 'Utrecht',
-    soldOut: false,
-    matchLink: '#',
-  },
-  {
-    homeTeam: 'AZ',
-    awayTeam: 'Twente',
-    soldOut: false,
-    matchLink: '#',
-  },
-];
-
 function MatchWidgetScreen() {
   const API_URL = 'http://localhost:8080/matches';
 
