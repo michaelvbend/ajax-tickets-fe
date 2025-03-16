@@ -32,6 +32,29 @@
   </head>
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
+    <p class="text-center text-white font-bold mb-4">
+      Keeping this website alive is costly. If you like the service, please
+      consider donating to support.
+    </p>
+    <div id="donate-button-container">
+      <div id="donate-button"></div>
+      <script
+        src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js"
+        charset="UTF-8"
+      ></script>
+      <script>
+        PayPal.Donation.Button({
+          env: 'production',
+          hosted_button_id: '8DVUKHEQLDPSL',
+          image: {
+            src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+            alt: 'Donate with PayPal button',
+            title: 'PayPal - The safer, easier way to pay online!',
+          },
+        }).render('#donate-button');
+      </script>
+    </div>
   </body>
 </html>
