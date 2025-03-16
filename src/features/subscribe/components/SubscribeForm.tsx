@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+interface Match {
+  homeTeam: string;
+  awayTeam: string;
+  soldOut: boolean;
+  matchLink: string;
+}
+
 function SubscribeForm() {
   const [email, setEmail] = useState('');
   const [selectedMatch, setSelectedMatch] = useState('');
@@ -79,7 +86,7 @@ function SubscribeForm() {
           <option value='' disabled>
             Select a match
           </option>
-          {data?.matches.map((match) => (
+          {data?.matches.map((match: Match) => (
             <option key={match.awayTeam} value={match.awayTeam}>
               {match.awayTeam}
             </option>
