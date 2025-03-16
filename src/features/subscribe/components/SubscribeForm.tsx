@@ -1,8 +1,24 @@
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 function SubscribeForm() {
   const [email, setEmail] = useState('');
+  const [selectedMatch, setSelectedMatch] = useState('');
+  const API_URL = 'https://goldfish-app-mpxfi.ondigitalocean.app/api/matches';
+
+  const fetchAvailableMatches = async () => {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  };
+
+  const { data } = useQuery({
+    queryKey: ['matches'],
+    queryFn: fetchAvailableMatches,
+    staleTime: Infinity,
+  });
 
   const mutation = useMutation({
     mutationFn: (newEmail: string) => {
@@ -13,10 +29,10 @@ function SubscribeForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: newEmail }),
+        body: JSON.stringify({ email: newEmail, matchAgainst: selectedMatch }),
       }).then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('User already subscribed to match!');
         }
         return response;
       });
@@ -45,6 +61,30 @@ function SubscribeForm() {
           required
           className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm'
         />
+      </div>
+      <div>
+        <label
+          htmlFor='match'
+          className='block text-sm font-medium text-gray-700'
+        >
+          Select Match
+        </label>
+        <select
+          name='match'
+          value={selectedMatch}
+          onChange={(e) => setSelectedMatch(e.target.value)}
+          required
+          className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm'
+        >
+          <option value='' disabled>
+            Select a match
+          </option>
+          {data?.matches.map((match) => (
+            <option key={match.awayTeam} value={match.awayTeam}>
+              {match.awayTeam}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <button
