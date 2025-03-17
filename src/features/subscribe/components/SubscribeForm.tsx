@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import useFetchMatches from '../../../api/hooks/useFetchMatches';
+import useSubscribeToMatch from '../../../api/hooks/useSubscribeToMatch';
 
 interface Match {
   homeTeam: string;
@@ -11,44 +12,13 @@ interface Match {
 function SubscribeForm() {
   const [email, setEmail] = useState('');
   const [selectedMatch, setSelectedMatch] = useState('');
-  const API_URL = 'https://goldfish-app-mpxfi.ondigitalocean.app/api/matches';
+  const { data } = useFetchMatches(Infinity);
 
-  const fetchAvailableMatches = async () => {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  };
-
-  const { data } = useQuery({
-    queryKey: ['matches'],
-    queryFn: fetchAvailableMatches,
-    staleTime: Infinity,
-  });
-
-  const mutation = useMutation({
-    mutationFn: (newEmail: string) => {
-      const API_URL =
-        'https://goldfish-app-mpxfi.ondigitalocean.app/api/subscribe';
-      return fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: newEmail, matchAgainst: selectedMatch }),
-      }).then((response) => {
-        if (!response.ok) {
-          throw new Error('User already subscribed to match!');
-        }
-        return response;
-      });
-    },
-  });
+  const mutation = useSubscribeToMatch(email, selectedMatch);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate(email);
+    mutation.mutate();
   };
 
   return (

@@ -1,21 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import MatchList from '../components/MatchList';
+import useFetchMatches from '../../../api/hooks/useFetchMatches';
 
 function MatchWidgetScreen() {
-  const API_URL = 'https://goldfish-app-mpxfi.ondigitalocean.app/api/matches';
-
-  const fetchAvailableMatches = async () => {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  };
-
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['matches'],
-    queryFn: fetchAvailableMatches,
-  });
+  const { data, error, isLoading } = useFetchMatches();
 
   if (isLoading) {
     return <div>Loading...</div>;
